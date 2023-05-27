@@ -1,22 +1,25 @@
 import googleCalendar from '@googleapis/calendar';
 
-const SCOPE_CALENDAR = 'https://www.googleapis.com/auth/calendar';
-const SCOPE_EVENTS = 'https://www.googleapis.com/auth/calendar.events';
-const auth = await authenticate();
-const calendar = googleCalendar.calendar('v3');
-
-async function authenticate() {
-  const jwtClient = new googleCalendar.auth.JWT(
-    process.env.GOOGLE_CLIENT_EMAIL,
-    null,
-    process.env.GOOGLE_PRIVATE_KEY,
-    [SCOPE_CALENDAR, SCOPE_EVENTS]
-  );
-  await jwtClient.authorize();
-  return jwtClient;
-}
-
 class CalendarService {
+  constructor() {
+    this.SCOPE_CALENDAR = 'https://www.googleapis.com/auth/calendar';
+    this.SCOPE_EVENTS = 'https://www.googleapis.com/auth/calendar.events';
+    // TODO тут нужно ждать результат функции
+    this.auth = this.authenticate();
+    this.calendar = googleCalendar.calendar('v3');
+  }
+
+  async authenticate() {
+    const jwtClient = new googleCalendar.auth.JWT(
+      process.env.GOOGLE_CLIENT_EMAIL,
+      null,
+      process.env.GOOGLE_PRIVATE_KEY,
+      [SCOPE_CALENDAR, SCOPE_EVENTS]
+    );
+    await jwtClient.authorize();
+    return jwtClient;
+  }
+
   async create(event, calendarId) {
     try {
       const answer = await calendar.events.insert({
