@@ -5,7 +5,7 @@ class CalendarService {
     this.SCOPE_CALENDAR = 'https://www.googleapis.com/auth/calendar';
     this.SCOPE_EVENTS = 'https://www.googleapis.com/auth/calendar.events';
     // TODO тут нужно ждать результат функции
-    this.auth = this.authenticate();
+    this.auth = this.authenticate().then(resolve => resolve);
     this.calendar = googleCalendar.calendar('v3');
   }
 
@@ -14,7 +14,7 @@ class CalendarService {
       process.env.GOOGLE_CLIENT_EMAIL,
       null,
       process.env.GOOGLE_PRIVATE_KEY,
-      [SCOPE_CALENDAR, SCOPE_EVENTS]
+      [this.SCOPE_CALENDAR, this.SCOPE_EVENTS]
     );
     await jwtClient.authorize();
     return jwtClient;
@@ -23,7 +23,7 @@ class CalendarService {
   async create(event, calendarId) {
     try {
       const answer = await calendar.events.insert({
-        auth: auth,
+        auth: this.auth,
         calendarId,
         resource: event,
       });
@@ -36,7 +36,7 @@ class CalendarService {
   async update(event, calendarId, id) {
     try {
       const answer = await calendar.events.update({
-        auth,
+        auth: this.auth,
         calendarId,
         eventId: id,
         resource: event,
