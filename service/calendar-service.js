@@ -5,19 +5,25 @@ class CalendarService {
     this.SCOPE_CALENDAR = 'https://www.googleapis.com/auth/calendar';
     this.SCOPE_EVENTS = 'https://www.googleapis.com/auth/calendar.events';
     this.auth = null;
-    this.authenticate().then(res => this.auth = res);
+    this.authenticate()
+      .then(res => (this.auth = res))
+      .catch(e => console.log(e));
     this.calendar = googleCalendar.calendar('v3');
   }
 
   async authenticate() {
-    const jwtClient = new googleCalendar.auth.JWT(
-      process.env.GOOGLE_CLIENT_EMAIL,
-      null,
-      process.env.GOOGLE_PRIVATE_KEY,
-      [this.SCOPE_CALENDAR, this.SCOPE_EVENTS]
-    );
-    await jwtClient.authorize();
-    return jwtClient;
+    try {
+      const jwtClient = new googleCalendar.auth.JWT(
+        process.env.GOOGLE_CLIENT_EMAIL,
+        null,
+        process.env.GOOGLE_PRIVATE_KEY,
+        [this.SCOPE_CALENDAR, this.SCOPE_EVENTS]
+      );
+      await jwtClient.authorize();
+      return jwtClient;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async create(event, calendarId) {

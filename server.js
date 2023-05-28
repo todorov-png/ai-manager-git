@@ -14,7 +14,6 @@ import roleRouter from './router/admin/role.js';
 import integrationRouter from './router/integration.js';
 import errorMiddleware from './middlewares/error-middleware.js';
 import managerService from './service/manager-service.js';
-import calendarService from './service/calendar-service.js';
 
 env.config();
 mongoose.set('strictQuery', false);
