@@ -14,6 +14,7 @@ import roleRouter from './router/admin/role.js';
 import integrationRouter from './router/integration.js';
 import errorMiddleware from './middlewares/error-middleware.js';
 import managerService from './service/manager-service.js';
+import calendarService from './service/calendar-service.js';
 
 env.config();
 mongoose.set('strictQuery', false);
@@ -61,7 +62,8 @@ const start = async () => {
       .then(() => console.log('[OK] DB is connected'))
       .catch(err => console.error(err));
 
-    cron.schedule('0 0 0 * * *', async () => {
+    //TODO тут добавить еще один нолик что б раз в день, а не в час делалось
+    cron.schedule('0 0 * * * *', async () => {
       console.log('cron');
       await managerService.runAllManager();
     });

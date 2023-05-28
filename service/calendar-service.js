@@ -4,8 +4,8 @@ class CalendarService {
   constructor() {
     this.SCOPE_CALENDAR = 'https://www.googleapis.com/auth/calendar';
     this.SCOPE_EVENTS = 'https://www.googleapis.com/auth/calendar.events';
-    // TODO тут нужно ждать результат функции
-    this.auth = this.authenticate().then(resolve => resolve);
+    this.auth = null;
+    this.authenticate().then(res => this.auth = res);
     this.calendar = googleCalendar.calendar('v3');
   }
 
