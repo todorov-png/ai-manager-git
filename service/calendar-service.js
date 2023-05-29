@@ -5,6 +5,13 @@ class CalendarService {
     this.SCOPE_CALENDAR = 'https://www.googleapis.com/auth/calendar';
     this.SCOPE_EVENTS = 'https://www.googleapis.com/auth/calendar.events';
     this.auth = null;
+    setTimeout(
+      () =>
+        this.authenticate()
+          .then(res => (this.auth = res))
+          .catch(e => console.log(e)),
+      2000
+    );
     // this.authenticate()
     //   .then(res => (this.auth = res))
     //   .catch(e => console.log(e));
@@ -19,7 +26,13 @@ class CalendarService {
         process.env.GOOGLE_PRIVATE_KEY,
         [this.SCOPE_CALENDAR, this.SCOPE_EVENTS]
       );
-      console.log('authenticate', process.env.GOOGLE_CLIENT_EMAIL, this.SCOPE_CALENDAR, this.SCOPE_EVENTS, jwtClient)
+      console.log(
+        'authenticate',
+        process.env.GOOGLE_CLIENT_EMAIL,
+        this.SCOPE_CALENDAR,
+        this.SCOPE_EVENTS,
+        jwtClient
+      );
       await jwtClient.authorize();
       return jwtClient;
     } catch (e) {
