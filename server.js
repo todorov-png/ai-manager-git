@@ -61,9 +61,7 @@ const start = async () => {
       .then(() => console.log('[OK] DB is connected'))
       .catch(err => console.error(err));
 
-    //TODO тут добавить еще один нолик что б раз в день, а не в час делалось
-    cron.schedule('0 * * * * *', async () => {
-      console.log('cron');
+    cron.schedule('0 0 0 * * *', async () => {
       await managerService.runAllManager();
     });
   } catch (e) {

@@ -16,7 +16,7 @@ class CalendarService {
       const jwtClient = new googleCalendar.auth.JWT(
         process.env.GOOGLE_CLIENT_EMAIL,
         null,
-        process.env.GOOGLE_PRIVATE_KEY.replace(/\\\n/g,'\n'),
+        process.env.GOOGLE_PRIVATE_KEY,
         [this.SCOPE_CALENDAR, this.SCOPE_EVENTS]
       );
       await jwtClient.authorize();
