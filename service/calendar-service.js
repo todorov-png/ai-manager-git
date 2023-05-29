@@ -19,6 +19,7 @@ class CalendarService {
         process.env.GOOGLE_PRIVATE_KEY,
         [this.SCOPE_CALENDAR, this.SCOPE_EVENTS]
       );
+      console.log('authenticate', process.env.GOOGLE_CLIENT_EMAIL, this.SCOPE_CALENDAR, this.SCOPE_EVENTS, jwtClient)
       await jwtClient.authorize();
       return jwtClient;
     } catch (e) {
