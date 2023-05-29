@@ -131,6 +131,7 @@ class ManagerService {
             calendarId,
             taskCalendarEventId
           );
+
           await notionService.updateTask(notion, task.id, {
             AutoDate: {
               date: {

@@ -49,7 +49,7 @@ app.use(errorMiddleware);
 
 const start = async () => {
   try {
-    await app.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`[OK] Server is running on PORT = ${PORT}`);
     });
 
@@ -62,7 +62,7 @@ const start = async () => {
       .catch(err => console.error(err));
 
     //TODO тут добавить еще один нолик что б раз в день, а не в час делалось
-    cron.schedule('0 0 * * * *', async () => {
+    cron.schedule('0 * * * * *', async () => {
       console.log('cron');
       await managerService.runAllManager();
     });
