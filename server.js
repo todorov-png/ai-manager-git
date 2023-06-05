@@ -61,7 +61,7 @@ const start = async () => {
       .then(() => console.log('[OK] DB is connected'))
       .catch(err => console.error(err));
 
-    cron.schedule('59 59 23 * * *', async () => {
+    cron.schedule('0 0 * * * *', async () => {
       console.log('cron')
       await managerService.runAllManager();
     });
